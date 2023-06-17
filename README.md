@@ -4,22 +4,21 @@ This is a simple CRUD application written in Go. It provides basic operations fo
 
 ## Folder Structure
 
-- `main.go`: Main entry point of the application where the server is started and the routes and handlers are configured.
-- `.env`: Configuration file for environment variables, such as database credentials or other application-specific settings.
-- `database/`: Folder for managing the database.
-  - `connection.go`: File for establishing the database connection.
-- `events/`: Folder for handling application-specific events or actions.
-  - `message.go`: File that defines common message
-- `handlers/`: Folder for the route handlers and HTTP request handlers.
-  - `any_handler.go`: File that contains the controllers for any CRUD operations.
-- `models/`: Folder for defining the data models of the application.
-  - `any.go`: File that defines the structure and methods related to the any name model.
-- `repository/`: Folder for data access and storage operations.
-  - `any_repository.go`: File that contains the interface and implementation of any repository.
-- `server/`: Folder for server configuration and management.
-  - `server.go`: File that defines the server configuration and starts the HTTP server.
-- `websocket/`: Folder for managing real-time communication through WebSocket.
-  - `websocket.go`: File that contains the logic for establishing and handling WebSocket connections.
+Here is an overview of each component and its function in the layered architecture you are using:
+
+- **database**: This folder likely contains code related to interacting with the database, such as data models, schemas, migrations, etc.
+
+- **repository**: This folder houses the repositories, which are responsible for communicating with the database or any other data persistence mechanism. Repositories are used to perform read/write operations on the database and provide an abstraction between business logic and storage details.
+
+- **service**: Here, you will find the services or business layer components. Services contain the business logic and orchestrate operations using repositories and other services if necessary. Their main purpose is to encapsulate complex logic and provide a consistent interface for use by other layers.
+
+- **interface**: This folder could contain interfaces or contracts that define the methods and data structures used by different components. Interfaces help define how components interact with each other and promote code modularity and reusability.
+
+- **handlers**: This folder could contain the request and response handlers or controllers. Handlers are responsible for handling HTTP requests or interactions with the system's external components. They transform requests and responses into formats that can be understood by the services or business layer components.
+
+- **websocket**: Folder for managing real-time communication through WebSocket.
+
+- **main.go**: This file generally contains the main entry point of the application. It is responsible for configuring and running the web server, establishing dependencies, and connecting the different components.
 
 ## Getting Started
 
