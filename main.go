@@ -30,6 +30,7 @@ func main() {
 
 	// Hotel routes
 	s.HandleFunc("/hotels", handlers.GetHotelHandler).Methods("GET")
+	s.HandleFunc("/hotel/{id}", handlers.GetHotelByIdHandler).Methods("GET")
 
 	http.ListenAndServe(":4000", r)
 }

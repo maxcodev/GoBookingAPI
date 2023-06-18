@@ -1,11 +1,20 @@
 package service
 
 import (
-	"context"
-	"github.com/maxcodev/booking_ws_api/repository"
 	"net/http"
+
+	"github.com/gorilla/mux"
+	"github.com/maxcodev/booking_ws_api/models"
+	"github.com/maxcodev/booking_ws_api/repository"
 )
 
-func GetHotelHandler(ctx context.Context, w http.ResponseWriter, r *http.Request) {
-	repository.GetHotels(ctx, w)
+func GetHotels(w http.ResponseWriter, r *http.Request) {
+	var hotels []models.Hotel
+	repository.GetHotels(w, &hotels)
+}
+
+func GetHotelById(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	var hotel models.Hotel
+	repository.GetHotelById(w, r, &hotel, params)
 }
