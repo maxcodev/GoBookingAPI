@@ -31,6 +31,8 @@ func main() {
 	// Hotel routes
 	s.HandleFunc("/hotels", handlers.GetHotelHandler).Methods("GET")
 	s.HandleFunc("/hotel/{id}", handlers.GetHotelByIdHandler).Methods("GET")
+	s.HandleFunc("/addHotel", handlers.CreateHotel).Methods("POST")
+	s.HandleFunc("/deleteHotel/{id}", handlers.DeleteHotelHandler).Methods("DELETE")
 
 	http.ListenAndServe(":4000", r)
 }
