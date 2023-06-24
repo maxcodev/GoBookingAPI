@@ -36,9 +36,9 @@ func GetHotelById(w http.ResponseWriter, r *http.Request, hotel *models.Hotel, p
 	json.NewEncoder(w).Encode(&hotel)
 }
 
-func CreateHotel(w http.ResponseWriter, r *http.Request, hotel *models.Hotel) {
-	err := database.DB.Create(hotel).Error //Crear el nuevo hotel en la BD
-	if err != nil {                        //Si hay un error
+func CreateHotel(w http.ResponseWriter, r *http.Request, newHotel *models.Hotel) {
+	err := database.DB.Create(newHotel).Error //Crear el nuevo hotel en la BD
+	if err != nil {                           //Si hay un error
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Internal server error"))
 		return
@@ -56,7 +56,7 @@ func UpdateHotelRepo(w http.ResponseWriter, r *http.Request, updatedHotel *model
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("New hotel has been added succefully!"))
+	w.Write([]byte("Hotel has been updated!"))
 }
 
 func DeleteHotel(w http.ResponseWriter, r *http.Request, hotel *models.Hotel, params map[string]string) {

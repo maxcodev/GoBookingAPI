@@ -45,7 +45,7 @@ func CreateHotel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	service.CreateHotel(w, r)
+	service.CreateHotel(w, r, &newHotel)
 }
 
 func UpdateHotel(w http.ResponseWriter, r *http.Request) {

@@ -1,7 +1,6 @@
 package service
 
 import (
-	"encoding/json"
 	"github.com/gorilla/mux"
 	"net/http"
 	"time"
@@ -21,10 +20,8 @@ func GetHotelById(w http.ResponseWriter, r *http.Request) {
 	repository.GetHotelById(w, r, &hotel, params)
 }
 
-func CreateHotel(w http.ResponseWriter, r *http.Request) {
-	var newHotel models.Hotel
-	json.NewDecoder(r.Body).Decode(&newHotel)
-	repository.CreateHotel(w, r, &newHotel)
+func CreateHotel(w http.ResponseWriter, r *http.Request, newHotel *models.Hotel) {
+	repository.CreateHotel(w, r, newHotel)
 }
 
 func UpdateHotelService(w http.ResponseWriter, r *http.Request, updatedHotel *models.Hotel) {
