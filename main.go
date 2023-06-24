@@ -29,10 +29,11 @@ func main() {
 	s := r.PathPrefix("/api").Subrouter()
 
 	// Hotel routes
-	s.HandleFunc("/hotels", handlers.GetHotelHandler).Methods("GET")
-	s.HandleFunc("/hotel/{id}", handlers.GetHotelByIdHandler).Methods("GET")
-	s.HandleFunc("/addHotel", handlers.CreateHotel).Methods("POST")
-	s.HandleFunc("/deleteHotel/{id}", handlers.DeleteHotelHandler).Methods("DELETE")
+	s.HandleFunc("/hotels", handlers.GetHotel).Methods(http.MethodGet)
+	s.HandleFunc("/hotel/{id}", handlers.GetHotelById).Methods(http.MethodGet)
+	s.HandleFunc("/addHotel", handlers.CreateHotel).Methods(http.MethodPost)
+	s.HandleFunc("/updateHotel", handlers.UpdateHotel).Methods(http.MethodPut)
+	s.HandleFunc("/deleteHotel/{id}", handlers.DeleteHotelHandler).Methods(http.MethodDelete)
 
 	http.ListenAndServe(":4000", r)
 }

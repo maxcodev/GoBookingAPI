@@ -16,6 +16,13 @@ func GetHotels(w http.ResponseWriter, hotels *[]models.Hotel) {
 	json.NewEncoder(w).Encode(&hotels)
 }
 
+func GetRelated(id uint) models.Hotel {
+	var hotel models.Hotel
+	database.DB.First(&hotel, id)
+	//fmt.Printf("Registro en la BDD: %+v\n", hotel)
+	return hotel
+}
+
 func GetHotelById(w http.ResponseWriter, r *http.Request, hotel *models.Hotel, params map[string]string) {
 	//Obtener todos los hoteles de la base de datos
 	id := params["id"]
@@ -40,6 +47,18 @@ func CreateHotel(w http.ResponseWriter, r *http.Request, hotel *models.Hotel) {
 	w.Write([]byte("New hotel has been added succefully!"))
 }
 
+func UpdateHotelRepo(w http.ResponseWriter, r *http.Request, updatedHotel *models.Hotel) {
+	//fmt.Println(updatedHotel)
+	err := database.DB.Model(&models.Hotel{}).Where("id = ?", updatedHotel.ID).Updates(updatedHotel).Error
+	if err != nil { //Si hay un error
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Internal server error"))
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("New hotel has been added succefully!"))
+}
+
 func DeleteHotel(w http.ResponseWriter, r *http.Request, hotel *models.Hotel, params map[string]string) {
 	id := params["id"]
 	database.DB.First(&hotel, id)
@@ -49,7 +68,6 @@ func DeleteHotel(w http.ResponseWriter, r *http.Request, hotel *models.Hotel, pa
 		w.Write([]byte("Hotel not found"))
 		return
 	}
-
 	//database.DB.Unscoped().Delete(&hotel) // Unscoped permite borrado fisico
 	database.DB.Delete(&hotel) // Borrado lógico
 	w.WriteHeader(http.StatusOK)

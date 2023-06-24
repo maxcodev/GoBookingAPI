@@ -2,9 +2,10 @@ package service
 
 import (
 	"encoding/json"
-	"net/http"
-
 	"github.com/gorilla/mux"
+	"net/http"
+	"time"
+
 	"github.com/maxcodev/booking_ws_api/models"
 	"github.com/maxcodev/booking_ws_api/repository"
 )
@@ -24,6 +25,16 @@ func CreateHotel(w http.ResponseWriter, r *http.Request) {
 	var newHotel models.Hotel
 	json.NewDecoder(r.Body).Decode(&newHotel)
 	repository.CreateHotel(w, r, &newHotel)
+}
+
+func UpdateHotelService(w http.ResponseWriter, r *http.Request, updatedHotel *models.Hotel) {
+	var upHotel models.Hotel
+	upHotel = repository.GetRelated(updatedHotel.ID)
+	upHotel.Name = updatedHotel.Name
+	upHotel.Outstanding = updatedHotel.Outstanding
+	upHotel.Description = updatedHotel.Description
+	upHotel.UpdatedAt = time.Now()
+	repository.UpdateHotelRepo(w, r, &upHotel)
 }
 
 func DeleteHotel(w http.ResponseWriter, r *http.Request) {
