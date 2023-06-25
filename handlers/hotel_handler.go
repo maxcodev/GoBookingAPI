@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"encoding/json"
+	"github.com/maxcodev/booking_ws_api/models/hotel"
 	"net/http"
 
-	"github.com/maxcodev/booking_ws_api/models"
 	"github.com/maxcodev/booking_ws_api/service"
 )
 
@@ -30,7 +30,7 @@ func GetHotelById(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateHotel(w http.ResponseWriter, r *http.Request) {
-	var newHotel models.Hotel
+	var newHotel hotel.Hotel
 	err := json.NewDecoder(r.Body).Decode(&newHotel)
 
 	if err != nil {
@@ -49,7 +49,7 @@ func CreateHotel(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateHotel(w http.ResponseWriter, r *http.Request) {
-	var updateHotel models.Hotel
+	var updateHotel hotel.Hotel
 	err := json.NewDecoder(r.Body).Decode(&updateHotel)
 
 	if err != nil {

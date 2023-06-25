@@ -2,13 +2,13 @@ package repository
 
 import (
 	"encoding/json"
+	"github.com/maxcodev/booking_ws_api/models/hotel"
 	"net/http"
 
 	"github.com/maxcodev/booking_ws_api/database"
-	"github.com/maxcodev/booking_ws_api/models"
 )
 
-func GetHotels(w http.ResponseWriter, hotels *[]models.Hotel) {
+func GetHotels(w http.ResponseWriter, hotels *[]hotel.Hotel) {
 	//Obtener todos los hoteles de la base de datos
 	database.DB.Find(&hotels)
 
@@ -16,14 +16,14 @@ func GetHotels(w http.ResponseWriter, hotels *[]models.Hotel) {
 	json.NewEncoder(w).Encode(&hotels)
 }
 
-func GetRelated(id uint) models.Hotel {
-	var hotel models.Hotel
+func GetRelated(id uint) hotel.Hotel {
+	var hotel hotel.Hotel
 	database.DB.First(&hotel, id)
 	//fmt.Printf("Registro en la BDD: %+v\n", hotel)
 	return hotel
 }
 
-func GetHotelById(w http.ResponseWriter, r *http.Request, hotel *models.Hotel, params map[string]string) {
+func GetHotelById(w http.ResponseWriter, r *http.Request, hotel *hotel.Hotel, params map[string]string) {
 	//Obtener todos los hoteles de la base de datos
 	id := params["id"]
 	database.DB.First(&hotel, id)
@@ -36,7 +36,7 @@ func GetHotelById(w http.ResponseWriter, r *http.Request, hotel *models.Hotel, p
 	json.NewEncoder(w).Encode(&hotel)
 }
 
-func CreateHotel(w http.ResponseWriter, r *http.Request, newHotel *models.Hotel) {
+func CreateHotel(w http.ResponseWriter, r *http.Request, newHotel *hotel.Hotel) {
 	err := database.DB.Create(newHotel).Error //Crear el nuevo hotel en la BD
 	if err != nil {                           //Si hay un error
 		w.WriteHeader(http.StatusInternalServerError)
@@ -47,9 +47,9 @@ func CreateHotel(w http.ResponseWriter, r *http.Request, newHotel *models.Hotel)
 	w.Write([]byte("New hotel has been added succefully!"))
 }
 
-func UpdateHotelRepo(w http.ResponseWriter, r *http.Request, updatedHotel *models.Hotel) {
+func UpdateHotelRepo(w http.ResponseWriter, r *http.Request, updatedHotel *hotel.Hotel) {
 	//fmt.Println(updatedHotel)
-	err := database.DB.Model(&models.Hotel{}).Where("id = ?", updatedHotel.ID).Updates(updatedHotel).Error
+	err := database.DB.Model(&hotel.Hotel{}).Where("id = ?", updatedHotel.ID).Updates(updatedHotel).Error
 	if err != nil { //Si hay un error
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Internal server error"))
@@ -59,7 +59,7 @@ func UpdateHotelRepo(w http.ResponseWriter, r *http.Request, updatedHotel *model
 	w.Write([]byte("Hotel has been updated!"))
 }
 
-func DeleteHotel(w http.ResponseWriter, r *http.Request, hotel *models.Hotel, params map[string]string) {
+func DeleteHotel(w http.ResponseWriter, r *http.Request, hotel *hotel.Hotel, params map[string]string) {
 	id := params["id"]
 	database.DB.First(&hotel, id)
 

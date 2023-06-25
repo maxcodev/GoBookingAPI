@@ -1,14 +1,13 @@
 package main
 
 import (
-	"log"
-	"net/http"
-
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"github.com/maxcodev/booking_ws_api/database"
 	"github.com/maxcodev/booking_ws_api/handlers"
-	"github.com/maxcodev/booking_ws_api/models"
+	"github.com/maxcodev/booking_ws_api/models/hotel"
+	"log"
+	"net/http"
 )
 
 func main() {
@@ -18,8 +17,12 @@ func main() {
 	}
 	database.DBConnection()
 
-	database.DB.AutoMigrate(models.Hotel{})
-	database.DB.AutoMigrate(models.Rooms{})
+	database.DB.AutoMigrate(hotel.Hotel{})
+	database.DB.AutoMigrate(hotel.Rooms{})
+	database.DB.AutoMigrate(hotel.Pictures{})
+	database.DB.AutoMigrate(hotel.Categories{})
+	database.DB.AutoMigrate(hotel.Type{})
+	database.DB.AutoMigrate(hotel.Services{})
 
 	r := mux.NewRouter()
 
